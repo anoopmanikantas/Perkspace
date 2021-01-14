@@ -1,3 +1,7 @@
+# NOTE: This code works only with google chrome
+# Add chrome browser to your system's path
+# Run chrome.cmd file from this repository to start chrome in debugging mode
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from collections import defaultdict
@@ -29,14 +33,16 @@ lis = defaultdict(list)
 
 try:
     driver.find_element_by_xpath(
-        r'//*[@id="ow3"]/div[1]/div/div[8]/div[3]/div[6]/div[3]/div/div[2]/div[3]/span/span').click()
+        r'//*[@id="ow3"]/div[1]/div/div[8]/div[3]/div[6]/div[3]/div/div[2]/div[3]/span/span'
+        ).click() # Chat button 
     print("\nChats open")
     sleep(2)
 
 except:
     try:
         driver.find_element_by_xpath(
-            r'//*[@id="ow3"]/div[1]/div/div[8]/div[3]/div[3]/div/div[2]/div[2]/div[1]/div[2]').click()
+            r'//*[@id="ow3"]/div[1]/div/div[8]/div[3]/div[3]/div/div[2]/div[2]/div[1]/div[2]'
+            ).click() # Chat button 
         sleep(2)
     except:
         pass
@@ -44,10 +50,10 @@ except:
     print('\nChats open')
 
 finally:
-    x = driver.find_elements_by_class_name('GDhqjd')
+    x = driver.find_elements_by_class_name('GDhqjd') # Fetches container of the participants
     for i in x:
-        lis['name'].append(i.find_element_by_class_name('YTbUzc').text)
-        lis['replies'].append(i.find_element_by_class_name('Zmm6We').text)
+        lis['name'].append(i.find_element_by_class_name('YTbUzc').text) # Fetches the name of the participant 
+        lis['replies'].append(i.find_element_by_class_name('Zmm6We').text) # Fetches the chats sent by that participant in that container
 
 for i, j in enumerate(lis['replies']):
     x = j.split("\n")
@@ -55,7 +61,8 @@ for i, j in enumerate(lis['replies']):
     lis['replies'][i] = x
 
 texpath = input(
-    "\nEnter a path to store the chat history, please add back slash at the end (Example: D:/anoop/py/):\n>>> ")
+    "\nEnter a path to store the chat history, please add back slash at the end (Example: D:/anoop/py/):\n>>> "
+    )
 with open(texpath + f'Meet_Chat_History_{d}.txt', 'a') as f:
     for i, j in zip(lis['name'], lis['replies']):
         f.write(i + ':-- ' + j + '\n')
@@ -67,7 +74,8 @@ with open(texpath + f'Meet_Chat_History_{d}.txt', 'r') as f:
     x = f.readlines()
 
 attPath = input(
-    '\nEnter the path of attendance sheet (File must be of xlsx type only. Example: "D:/anoop/py/test2.xlsx"):\n>>> ')
+    '\nEnter the path of attendance sheet (File must be of xlsx type only. Example: "D:/anoop/py/test2.xlsx"):\n>>> '
+    )
 print(f"\nReading xlsx file from {attPath}")
 
 df = pd.read_excel(attPath, engine='openpyxl')
@@ -91,6 +99,7 @@ for i, j in enumerate(df['name']):
 df.to_excel(attPath)
 
 print(f"\nAttendance marked and saved in {attPath}")
-print('\nTotal participants attended today (Note:This count is without repetition): ', sum([1 for i in df[f'{date}'] if i.lower() == 'present']))
+print('\nTotal participants attended today (Note:This count is without repetition): ',\
+      sum([1 for i in df[f'{date}'] if i.lower() == 'present']))
 driver.close()
 x = input("\npress enter to exit...")
