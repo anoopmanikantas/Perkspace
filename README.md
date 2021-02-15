@@ -8,6 +8,8 @@ Libraries used:\
 - selenium
 - os
 - re
-- pandas\
+- pandas
+- smtplib
+- google\
 \
 A Sample excel file is added to this repository, make sure the column names are same as this excel file.
