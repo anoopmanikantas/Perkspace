@@ -1,4 +1,4 @@
-# google-meet-attendance-python
+# Perkspace
 Simple python code to take attendance in google meet\
 Here students are asked to enter a secret key (for example '123x'), using selenium we scrape the live chat data from meet and store it as a txt file locally\
 If the key is detected that student will be marked present in the excel sheet (Excel sheet with name and register number must be created before hand).\
